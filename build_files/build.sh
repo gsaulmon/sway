@@ -205,8 +205,6 @@ PACKAGES=(
     qemu-user-binfmt
     qemu-user-static
     sysprof
-    incus
-    incus-agent
     lxc
     tiptop
     trace-cmd
@@ -227,14 +225,13 @@ PACKAGES=(
 )
 dnf5 -y install --exclude=proj-data-* "${PACKAGES[@]}"
 
+#install starship prompt
+wget "https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz" -O /tmp/starship.tar.gz
+tar -xzf /tmp/starship.tar.gz -C /tmp
+install -c -m 0755 /tmp/starship /usr/bin
+echo 'eval "$(starship init bash)"' >>/etc/bashrc
 
-#install flatpaks
-FLATPAKS=(
-    io.github.pwr_solaar.solaar
-    com.github.tchx84.Flatseal
-)
-flatpak install --system -y flathub ${FLATPAKS[@]}
-
+echo 'net.ipv4.ip_forward = 1' >> /usr/lib/sysctl.d/docker-ce.conf
 
 #### systemd stuff
 systemctl enable docker.socket
