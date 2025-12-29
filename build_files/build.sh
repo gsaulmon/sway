@@ -233,6 +233,9 @@ echo 'eval "$(starship init bash)"' >>/etc/bashrc
 
 echo 'net.ipv4.ip_forward = 1' >> /usr/lib/sysctl.d/docker-ce.conf
 
+#install bitwarden cli
+wget "https://bitwarden.com/download/?app=cli&platform=linux" -O bw.zip && unzip bw.zip -d /usr/local/bin && rm bw.zip
+
 #### systemd stuff
 systemctl enable docker.socket
 systemctl enable podman.socket
